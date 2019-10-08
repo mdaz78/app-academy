@@ -37,6 +37,7 @@ describe "Part 2:" do
 
     it "should return a new string where every letter of the message is shifted n positions in the alphabet" do
       expect(caesar_cipher("apple", 1)).to eq("bqqmf")
+      expect(caesar_cipher("Apple", 1)).to eq("Bqqmf")
       expect(caesar_cipher("apple", 2)).to eq("crrng")
       expect(caesar_cipher("hello", 5)).to eq("mjqqt")
       expect(caesar_cipher("zebra", 4)).to eq("difve")
