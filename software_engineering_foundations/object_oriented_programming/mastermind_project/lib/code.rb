@@ -46,7 +46,7 @@ class Code
 
   def num_exact_matches(code)
     exact_matches = 0
-    @pegs.each.with_index do |peg, index|
+    self.pegs.each.with_index do |peg, index|
       exact_matches += 1 if peg == code[index]
     end
     exact_matches
@@ -54,7 +54,7 @@ class Code
 
   def num_near_matches(code)
     near_matches = 0
-    @pegs.each.with_index do |peg, index|
+    self.pegs.each.with_index do |peg, index|
       if peg != code[index] && @pegs.include?(code[index])
         near_matches += 1
       end
