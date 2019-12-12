@@ -43,4 +43,52 @@ class Hangman
     end
   end
 
+  def try_guess(char)
+    if self.already_attempted?(char)
+      p "that has already been attempted"
+      false
+    else
+      @attempted_chars << char
+      indices = get_matching_indices(char)
+      if indices.empty?
+        @remaining_incorrect_guesses -= 1
+      else
+        fill_indices(char, indices)
+      end
+      true
+    end
+  end
+
+  def ask_user_for_guess()
+    p "Enter a char:"
+    char = gets.chomp
+    try_guess(char)
+  end
+
+  def win?()
+    if @guess_word.join('') == @secret_word
+      p "WIN"
+      true
+    else
+      false
+    end
+  end
+
+  def lose?()
+    if @remaining_incorrect_guesses == 0
+      p "LOSE"
+      return true
+    end
+    return false
+  end
+
+  def game_over?()
+    if win? || lose?
+      p @secret_word
+      true
+    else
+      false
+    end
+  end
+
 end
