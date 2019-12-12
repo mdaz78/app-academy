@@ -16,7 +16,7 @@ class Code
 
   def initialize(chars)
     if Code.valid_pegs?(chars)
-      @pegs = chars.map { |char| char.upcase }
+      @pegs = chars.map(&:upcase)
     else
       raise "Pegs are not valid"
     end

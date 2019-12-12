@@ -14,11 +14,7 @@ class Mastermind
     p "Enter a code"
     guess = gets.chomp
     code = Code.from_string(guess)
-    if code == @secret_code
-      true
-    else
-      print_matches(code)
-      false
-    end
+    print_matches(code)
+    code == @secret_code
   end
 end
