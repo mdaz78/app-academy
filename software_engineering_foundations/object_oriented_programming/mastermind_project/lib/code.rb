@@ -37,11 +37,33 @@ class Code
   end
 
   def [](index)
-    @pegs[index]
+    self.pegs[index]
   end
 
   def length
     @pegs.length
+  end
+
+  def num_exact_matches(code)
+    exact_matches = 0
+    @pegs.each.with_index do |peg, index|
+      exact_matches += 1 if peg == code[index]
+    end
+    exact_matches
+  end
+
+  def num_near_matches(code)
+    near_matches = 0
+    @pegs.each.with_index do |peg, index|
+      if peg != code[index] && @pegs.include?(code[index])
+        near_matches += 1
+      end
+    end
+    near_matches
+  end
+
+  def ==(code)
+    self.pegs == code.pegs
   end
 
 end
