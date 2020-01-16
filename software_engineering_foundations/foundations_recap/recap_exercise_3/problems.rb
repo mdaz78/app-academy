@@ -173,3 +173,37 @@ class String
     self
   end
 end
+
+# Part - 3
+# Recursion Questions
+
+def multiply(a, b)
+  return a if b == 1
+  if b < 0
+    -(multiply(a, (-b) - 1) + a)
+  else
+    multiply(a, b - 1) + a
+  end
+end
+
+def lucas_sequence(length)
+  return [] if length == 0
+  return [2] if length == 1
+  return [2, 1] if length == 2
+
+  seq = lucas_sequence(length - 1)
+  next_el = seq[-1] + seq[-2]
+  seq << next_el
+  seq
+end
+
+def prime_factorization(num)
+  (2...num).each do |fact|
+    if num % fact == 0
+      other_facts = num / fact
+      return [*prime_factorization(fact), *prime_factorization(other_facts)]
+    end
+  end
+
+  [num]
+end
