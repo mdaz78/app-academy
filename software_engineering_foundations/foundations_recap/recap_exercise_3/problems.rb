@@ -9,7 +9,6 @@ end
 # p no_dupes?(['x', 'x', 'y', 'z', 'z'])     # => ['y']
 # p no_dupes?([true, true, true])            # => []
 
-
 def no_consecutive_repeats?(arr)
   (0...arr.length - 1).each do |i|
     return false if arr[i] == arr[i + 1]
@@ -24,7 +23,6 @@ end
 # p no_consecutive_repeats?([10, 42, 3, 3, 10, 3])              # => false
 # p no_consecutive_repeats?(['x'])                              # => true
 
-
 def char_indices(str)
   indices_hash = Hash.new() { |h, k| h[k] = [] }
   str.each_char.with_index do |ch, i|
@@ -33,11 +31,9 @@ def char_indices(str)
   indices_hash
 end
 
-
 # Examples
 # p char_indices('mississippi')   # => {"m"=>[0], "i"=>[1, 4, 7, 10], "s"=>[2, 3, 5, 6], "p"=>[8, 9]}
 # p char_indices('classroom')     # => {"c"=>[0], "l"=>[1], "a"=>[2], "s"=>[3, 4], "r"=>[5], "o"=>[6, 7], "m"=>[8]}
-
 
 def longest_streak(str)
   streak_hash = Hash.new(0)
@@ -59,7 +55,6 @@ end
 # p longest_streak('aaaxyyyyyzz') # => 'yyyyy
 # p longest_streak('aaabbb')      # => 'bbb'
 # p longest_streak('abc')         # => 'c'
-
 
 def bi_prime?(num)
   factors = []
@@ -83,13 +78,12 @@ end
 # p bi_prime?(24)   # => false
 # p bi_prime?(64)   # => false
 
-
 def vigenere_cipher(message, keys)
   ciphered_message = ""
-  alphabets = ('a'..'z').to_a
+  alphabets = ("a".."z").to_a
   key_length = keys.length
   message.each_char.with_index do |char, index|
-    key = keys[ index % key_length ]
+    key = keys[index % key_length]
     index_of_char_in_alphabets = alphabets.index(char)
     ciphered_index = (key + index_of_char_in_alphabets) % 26
     ciphered_message += alphabets[ciphered_index]
@@ -103,7 +97,6 @@ end
 # p vigenere_cipher("toerrishuman", [1, 2, 3])  # => "uqhstltjxncq"
 # p vigenere_cipher("zebra", [3, 0])            # => "ceerd"
 # p vigenere_cipher("yawn", [5, 1])             # => "dbbo"
-
 
 # def vowel_rotate(str)
 #   vowels = ['a', 'e', 'i', 'o', 'u']
@@ -136,7 +129,7 @@ end
 # end
 
 def vowel_rotate(str)
-  vowels = 'aeiou'
+  vowels = "aeiou"
   vowel_indices = (0...str.length).select { |i| vowels.include?(str[i].downcase) }
   new_vowel_indices = vowel_indices.rotate(-1)
   new_str = str[0..-1]
@@ -149,14 +142,12 @@ def vowel_rotate(str)
   new_str
 end
 
-
 # Examples
-p vowel_rotate('computer')      # => "cempotur"
-p vowel_rotate('oranges')       # => "erongas"
-p vowel_rotate('headphones')    # => "heedphanos"
-p vowel_rotate('bootcamp')      # => "baotcomp"
-p vowel_rotate('awesome')       # => "ewasemo"
-
+p vowel_rotate("computer")      # => "cempotur"
+p vowel_rotate("oranges")       # => "erongas"
+p vowel_rotate("headphones")    # => "heedphanos"
+p vowel_rotate("bootcamp")      # => "baotcomp"
+p vowel_rotate("awesome")       # => "ewasemo"
 
 class String
   def select(&prc)
