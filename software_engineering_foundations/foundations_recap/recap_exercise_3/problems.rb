@@ -156,3 +156,29 @@ p vowel_rotate('oranges')       # => "erongas"
 p vowel_rotate('headphones')    # => "heedphanos"
 p vowel_rotate('bootcamp')      # => "baotcomp"
 p vowel_rotate('awesome')       # => "ewasemo"
+
+
+class String
+  def select(&prc)
+    result = ""
+    return result if prc.nil?
+
+    self.each_char do |ch|
+      if prc.call(ch)
+        result += ch
+      end
+    end
+
+    result
+  end
+
+  def map!(&prc)
+    return self if prc.nil?
+
+    self.each_char.with_index do |ch, i|
+      self[i] = prc.call(ch, i)
+    end
+
+    self
+  end
+end
