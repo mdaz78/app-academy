@@ -1,4 +1,5 @@
-require "byebug"
+## Phase 1 ##
+
 # Write a method strange_sums that accepts an array of numbers as an argument.
 # The method should return a count of the number of distinct pairs of elements
 # that have a sum of zero. You may assume that the input array contains
@@ -104,6 +105,10 @@ def get_total_number_of_factors(number)
   end
   total_number_of_factors
 end
+
+
+## Phase 2 ##
+
 
 # Write a method anti_prime? that accepts a number as an argument.
 # The method should return true if the given number has more divisors
@@ -213,11 +218,14 @@ def tribonacci_number(num)
   tribonacci_number(num - 3) + tribonacci_number(num - 2) + tribonacci_number(num - 1);
 end
 
-p tribonacci_number(1)  # 1
-p tribonacci_number(2)  # 1
-p tribonacci_number(3)  # 2
-p tribonacci_number(4)  # 4
-p tribonacci_number(5)  # 7
-p tribonacci_number(6)  # 13
-p tribonacci_number(7)  # 24
-p tribonacci_number(11) # 274
+# p tribonacci_number(1)  # 1
+# p tribonacci_number(2)  # 1
+# p tribonacci_number(3)  # 2
+# p tribonacci_number(4)  # 4
+# p tribonacci_number(5)  # 7
+# p tribonacci_number(6)  # 13
+# p tribonacci_number(7)  # 24
+# p tribonacci_number(11) # 274
+
+
+## Phase 3 ##
