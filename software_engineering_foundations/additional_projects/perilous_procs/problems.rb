@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # some?
 #
 # Write a method some? that accepts an array and a block as arguments. The
@@ -11,7 +13,6 @@ def some?(arr, &prc)
   false
 end
 
-
 # Examples
 # p some?([3, 1, 11, 5]) { |n| n.even? }                                # false
 # p some?([3, 4, 11, 5]) { |n| n.even? }                                # true
@@ -19,7 +20,6 @@ end
 # p some?(['squash', 'corn', 'kale', 'carrot']) { |str| str[0] == 'p' } # false
 # p some?(['squash', 'corn', 'kale', 'potato']) { |str| str[0] == 'p' } # true
 # p some?(['parsnip', 'lettuce', 'pea']) { |str| str[0] == 'p' }        # true
-
 
 # exactly?
 #
@@ -99,7 +99,6 @@ end
 # p at_least?([true, true, true, true], 3) { |bool| bool }
 # # true
 
-
 # every?
 
 # Write a method every? that accepts an array and a block as arguments. The
@@ -118,8 +117,6 @@ end
 # p every?(['squash', 'corn', 'kale', 'carrot']) { |str| str[0] == 'p' }  # false
 # p every?(['squash', 'pea', 'kale', 'potato']) { |str| str[0] == 'p' }   # false
 # p every?(['parsnip', 'potato', 'pea']) { |str| str[0] == 'p' }          # true
-
-
 
 # at_most?
 
@@ -143,7 +140,6 @@ end
 # p at_most?(['r', 'q', 'e', 'z'], 2) { |el| 'aeiou'.include?(el) }    # true
 # p at_most?(['r', 'i', 'e', 'z'], 2) { |el| 'aeiou'.include?(el) }    # true
 # p at_most?(['r', 'i', 'e', 'o'], 2) { |el| 'aeiou'.include?(el) }    # false
-
 
 # first_index
 
@@ -175,7 +171,9 @@ end
 def xnor_select(arr, prc1, prc2)
   selected_elements = []
   arr.each do |el|
-    selected_elements << el if (prc1.call(el) && prc2.call(el)) || (prc1.call(el) == false && prc2.call(el) == false)
+    if (prc1.call(el) && prc2.call(el)) || (prc1.call(el) == false && prc2.call(el) == false)
+      selected_elements << el
+    end
   end
   selected_elements
 end
@@ -186,8 +184,6 @@ end
 # p xnor_select([8, 3, -4, -5], is_even, is_positive)         # [8, -5]
 # p xnor_select([-7, -13, 12, 5, -10], is_even, is_positive)  # [-7, -13, 12]
 # p xnor_select([-7, -13, 12, 5, -10], is_odd, is_positive)   # [5, -10]
-
-
 
 # filter_out!
 #
@@ -216,7 +212,6 @@ end
 # filter_out!([1, 7, 3, 5 ]) { |x| x.even? }
 # p arr_4 # [1, 7, 3, 5]
 
-
 # multi_map
 
 # Write a method multi_map that accepts an array, an optional number (n), and a
@@ -239,7 +234,6 @@ end
 # p multi_map([4, 3, 2, 7], 1) { |num| num * 10 }             # [40, 30, 20, 70]
 # p multi_map([4, 3, 2, 7], 2) { |num| num * 10 }             # [400, 300, 200, 700]
 # p multi_map([4, 3, 2, 7], 4) { |num| num * 10 }             # [40000, 30000, 20000, 70000]
-
 
 # proctition
 
@@ -309,7 +303,6 @@ end
 # p selected_map!(arr_3, is_positive, square) # nil
 # p arr_3                                     # [-10, 16, 49, 36, -2, -9]
 
-
 # chain_map
 
 # Write a method that accepts any value and an array of procs as an argument.
@@ -336,3 +329,46 @@ end
 # p chain_map(25, [add_5, half, square])  # 225
 # p chain_map(4, [square, half])          # 8
 # p chain_map(4, [half, square])          # 4
+
+# proc_suffix
+
+# Write a method proc_suffix that accepts a sentence and a hash as arguments.
+# The hash contains procs as keys and suffix strings as values. The method
+# should return a new sentence where each word of the original sentence is
+# appended with a suffix if the original word returns true when given to the
+# corresponding proc key. If an original word returns true for multiple procs,
+# then the suffixes should be appended in the order that they appear in the
+# input hash.
+
+def proc_suffix(sentence, hash)
+  suffixed_words = sentence.split(' ').map do |word|
+    suffixed_word = word
+    hash.each do |prc, suffix|
+      suffixed_word += suffix if prc.call(word)
+    end
+    suffixed_word
+  end
+  suffixed_words.join(' ')
+end
+
+contains_a = proc { |w| w.include?('a') }
+three_letters = proc { |w| w.length == 3 }
+four_letters = proc { |w| w.length == 4 }
+
+# p proc_suffix('dog cat',
+#               contains_a => 'ly',
+#               three_letters => 'o') # "dogo catlyo"
+
+# p proc_suffix('dog cat',
+#               three_letters => 'o',
+#               contains_a => 'ly')   # "dogo catoly"
+
+# p proc_suffix('wrong glad cat',
+#               contains_a => 'ly',
+#               three_letters => 'o',
+#               four_letters => 'ing') # "wrong gladlying catlyo"
+
+# p proc_suffix('food glad rant dog cat',
+#               four_letters => 'ing',
+#               contains_a => 'ly',
+#               three_letters => 'o') # "fooding gladingly rantingly dogo catlyo"
