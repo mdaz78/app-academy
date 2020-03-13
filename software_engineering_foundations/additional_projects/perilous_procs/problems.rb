@@ -372,3 +372,169 @@ four_letters = proc { |w| w.length == 4 }
 #               four_letters => 'ing',
 #               contains_a => 'ly',
 #               three_letters => 'o') # "fooding gladingly rantingly dogo catlyo"
+
+# proctition_platinum
+
+# Write a method proctition_platinum that accepts an array and any number of
+# additional procs as arguments. The method should return a hash where the keys
+# correspond to the number of procs passed in.
+
+#     For example, if three procs are passed in, then the hash should have the
+#     keys 1, 2, and 3.
+
+# The values associated with each key should be an array containing the elements
+# of the input array that return true when passed into the corresponding proc.
+
+#     For example, this means that the array that corresponds to the key 2
+#     should contain the elements that return true when passed into the second
+#     proc.
+
+# If an element returns true for multiple procs, then it should only be placed
+# into the array that corresponds to the proc that appears first in the
+# arguments.
+def proctition_platinum(arr, *prcs)
+  local_arr = arr.dup
+  proctition_hash = {}
+  prcs.each_with_index do |prc, index|
+    proctition_hash[index + 1] = []
+    local_arr.each_with_index do |el, idx|
+      if prc.call(el)
+        proctition_hash[index + 1] << el
+        local_arr = local_arr.select { |e| e != el }
+      end
+    end
+  end
+  proctition_hash
+end
+
+# is_yelled = proc { |s| s[-1] == '!' }
+# is_upcase = proc { |s| s.upcase == s }
+# contains_a = proc { |s| s.downcase.include?('a') }
+# begins_w = proc { |s| s.downcase[0] == 'w' }
+#
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_yelled, contains_a)
+# # {1=>["when!", "WHERE!"], 2=>["what"]}
+#
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_yelled, is_upcase, contains_a)
+# # {1=>["when!", "WHERE!"], 2=>["WHO", "WHY"], 3=>["what"]}
+#
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], is_upcase, is_yelled, contains_a)
+# # {1=>["WHO", "WHERE!", "WHY"], 2=>["when!"], 3=>["what"]}
+#
+# p proctition_platinum(['WHO', 'what', 'when!', 'WHERE!', 'how', 'WHY'], begins_w, is_upcase, is_yelled, contains_a)
+# # {1=>["WHO", "what", "when!", "WHERE!", "WHY"], 2=>[], 3=>[], 4=>[]}
+
+
+# procipher
+#
+# Write a method procipher that accepts a sentence and a hash as arguments. The
+# hash contains procs as both keys and values. The method should return a new
+# sentence where each word of the input sentence is changed by a value proc if
+# the original word returns true when passed into the key proc. If an original
+# word returns true for multiple key procs, then the value proc changes should be
+# applied in the order that they appear in the hash.
+def procipher(sentence, hash)
+  prociphered_words = []
+  words = sentence.split()
+  words.each do |word|
+    prociphered_word = word
+    hash.each do |key_prc, value_prc|
+      prociphered_word = value_prc.call(prociphered_word) if key_prc.call(word)
+    end
+    prociphered_words << prociphered_word
+  end
+  prociphered_words.join(' ')
+end
+
+# is_yelled = Proc.new { |s| s[-1] == '!' }
+# is_upcase = Proc.new { |s| s.upcase == s }
+# contains_a = Proc.new { |s| s.downcase.include?('a') }
+# make_question = Proc.new { |s| s + '???' }
+# reverse = Proc.new { |s| s.reverse }
+# add_smile = Proc.new { |s| s + ':)' }
+#
+# p procipher('he said what!',
+#     is_yelled => make_question,
+#     contains_a => reverse
+# ) # "he dias ???!tahw"
+#
+# p procipher('he said what!',
+#     contains_a => reverse,
+#     is_yelled => make_question
+# ) # "he dias !tahw???"
+#
+# p procipher('he said what!',
+#     contains_a => reverse,
+#     is_yelled => add_smile
+# ) # "he dias !tahw:)"
+#
+# p procipher('stop that taxi now',
+#     is_upcase => add_smile,
+#     is_yelled => reverse,
+#     contains_a => make_question
+# ) # "stop that??? taxi??? now"
+#
+# p procipher('STOP that taxi now!',
+#     is_upcase => add_smile,
+#     is_yelled => reverse,
+#     contains_a => make_question
+# ) # "STOP:) that??? taxi??? !won"
+
+
+# picky_procipher
+#
+# Write a method picky_procipher that accepts a sentence and a hash as arguments.
+# The hash contains procs as both keys and values. The method should return a
+# new sentence where each word of the input sentence is changed by a value proc
+# if the original word returns true when passed into the key proc. If an original
+#   word returns true for multiple key procs, then only the value proc that
+#   appears earliest in the hash should be applied.
+def picky_procipher(sentence, hash)
+  words = sentence.split
+  prociphered_words = []
+  words.each do |word|
+    hash.each do |key_prc, value_prc|
+      if key_prc.call(word)
+        word = value_prc.call(word)
+        break
+      end
+    end
+    prociphered_words << word
+  end
+  prociphered_words.join(' ')
+end
+
+
+# is_yelled = Proc.new { |s| s[-1] == '!' }
+# is_upcase = Proc.new { |s| s.upcase == s }
+# contains_a = Proc.new { |s| s.downcase.include?('a') }
+# make_question = Proc.new { |s| s + '???' }
+# reverse = Proc.new { |s| s.reverse }
+# add_smile = Proc.new { |s| s + ':)' }
+#
+# p picky_procipher('he said what!',
+#     is_yelled => make_question,
+#     contains_a => reverse
+# ) # "he dias what!???"
+#
+# p picky_procipher('he said what!',
+#     contains_a => reverse,
+#     is_yelled => make_question
+# ) # "he dias !tahw"
+#
+# p picky_procipher('he said what!',
+#     contains_a => reverse,
+#     is_yelled => add_smile
+# ) # "he dias !tahw"
+#
+# p picky_procipher('stop that taxi now',
+#     is_upcase => add_smile,
+#     is_yelled => reverse,
+#     contains_a => make_question
+# ) # "stop that??? taxi??? now"
+#
+# p picky_procipher('STOP that taxi!',
+#     is_upcase => add_smile,
+#     is_yelled => reverse,
+#     contains_a => make_question
+# ) # "STOP:) that??? !ixat"
