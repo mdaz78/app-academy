@@ -2,9 +2,13 @@ require_relative 'board'
 require_relative 'human_player'
 
 class Game
-  def initialize(board_size, *marks)
+  def initialize(board_size, player_hash)
     @board = Board.new(board_size)
-    @players = marks.map { |mark| HumanPlayer.new(mark) }
+    # true means computer player, false means human player
+    @players =
+      player_hash.map do |mark, player_type|
+        player_type ? ComputerPlayer.new(mark) : HumanPlayer.new(mark)
+      end
     @current_player = @players.first
   end
 
@@ -16,7 +20,7 @@ class Game
   def play
     while @board.empty_positions?
       @board.print
-      position = @current_player.get_position
+      position = @current_player.get_position(@board.legal_positions)
       @board.place_mark(position, @current_player.mark)
       if @board.win?(@current_player.mark)
         puts "Hurray! #{@current_player.mark} wins the game"
@@ -26,6 +30,6 @@ class Game
       end
     end
 
-    return "It's a draw!"
+    "It's a draw!"
   end
 end

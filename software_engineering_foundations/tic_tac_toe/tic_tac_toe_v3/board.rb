@@ -57,4 +57,16 @@ class Board
     @board.flatten.each { |el| return true if el == '_' }
     false
   end
+
+  def legal_positions
+    positions = []
+    (0...@board.length).each do |outer_index|
+      (0...@board.length).each do |inner_index|
+        positions << [outer_index, inner_index]
+      end
+    end
+    positions.select do |position|
+      self.valid?(position) && self.empty?(position)
+    end
+  end
 end
