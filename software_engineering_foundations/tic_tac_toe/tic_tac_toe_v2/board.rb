@@ -1,6 +1,6 @@
 class Board
-  def initialize
-    @board = Array.new(3) { %w[_] * 3 }
+  def initialize(n)
+    @board = Array.new(n) { %w[_] * n }
   end
 
   def valid?(position)
@@ -8,7 +8,7 @@ class Board
     height = @board.length
     width = @board.first.length
     is_positive = x >= 0 && y >= 0
-    is_positive && x <= height && y <= width
+    is_positive && x < height && y < width
   end
 
   def empty?(position)
@@ -30,11 +30,11 @@ class Board
   end
 
   def win_row?(mark)
-    @board.any? { |row| row.count(mark) == 3 }
+    @board.any? { |row| row.count(mark) == @board.length }
   end
 
   def win_col?(mark)
-    @board.transpose.any? { |row| row.count(mark) == 3 }
+    @board.transpose.any? { |row| row.count(mark) == @board.length }
   end
 
   def win_diagonal?(mark)
@@ -45,7 +45,8 @@ class Board
         row[index]
       end
 
-    left_diagonal.count(mark) == 3 or right_diagonal.count(mark) == 3
+    left_diagonal.count(mark) == @board.length or
+      right_diagonal.count(mark) == @board.length
   end
 
   def win?(mark)
