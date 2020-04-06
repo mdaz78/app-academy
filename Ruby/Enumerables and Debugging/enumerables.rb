@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Array
   def my_each(&prc)
     length = self.length
@@ -12,7 +14,7 @@ class Array
 
   def my_select(&prc)
     result = []
-    self.each do |el|
+    each do |el|
       result << el if prc.call(el)
     end
     result
@@ -20,25 +22,82 @@ class Array
 
   def my_reject(&prc)
     result = []
-    self.each { |el| result << el unless prc.call(el) }
+    each { |el| result << el unless prc.call(el) }
     result
   end
 
   def my_any?(&prc)
-    self.each do |el|
+    each do |el|
       return true if prc.call(el)
     end
     false
   end
 
   def my_all?(&prc)
-    self.each do |el|
+    each do |el|
       return false unless prc.call(el)
     end
     true
   end
-end
 
+  def my_flatten
+    flattened = []
+
+    each do |el|
+      if el.is_a? Array
+        flattened.concat(el.my_flatten)
+      else
+        flattened << el
+      end
+    end
+    flattened
+  end
+
+  def my_zip(*args)
+    result = []
+
+    each_with_index do |el, self_index|
+      small = []
+      small << el
+
+      args.each do |arr|
+        small << arr[self_index]
+      end
+
+      result << small
+    end
+
+    result
+  end
+
+  def my_rotate(positions = 1)
+    split_idx = positions % length
+
+    drop(split_idx) + take(split_idx)
+  end
+
+  def my_join(separator = '')
+    result = ''
+    each_with_index do |el, index|
+      result += el
+      result += separator if index != length - 1
+    end
+
+    result
+  end
+
+  def my_reverse
+    result = []
+    i = length - 1
+    while i >= 0
+      result << self[i]
+      i -= 1
+    end
+
+    result
+  end
+
+end
 
 ## TESTS ##
 
@@ -68,3 +127,33 @@ end
 # a = [1, 2, 3]
 # p a.my_all? { |num| num > 1 } # => false
 # p a.my_all? { |num| num < 4 } # => true
+
+# my_flatten test
+# p [1, 2, 3, [4, [5, 6]], [[[7]], 8]].my_flatten # => [1, 2, 3, 4, 5, 6, 7, 8]
+
+# my_zip test
+# a = [4, 5, 6]
+# b = [7, 8, 9]
+# p [1, 2, 3].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
+# p a.my_zip([1, 2], [8]) # => [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
+# p [1, 2].my_zip(a, b) # => [[1, 4, 7], [2, 5, 8]]
+# #
+# c = [10, 11, 12]
+# d = [13, 14, 15]
+# p [1, 2].my_zip(a, b, c, d) # => [[1, 4, 7, 10, 13], [2, 5, 8, 11, 14]]
+
+# my_rotate test
+# a = ["a", "b", "c", "d"]
+# p a.my_rotate #=> ["b", "c", "d", "a"]
+# p a.my_rotate(2) #=> ["c", "d", "a", "b"]
+# p a.my_rotate(-3) #=> ["b", "c", "d", "a"]
+# p a.my_rotate(15) #=> ["d", "a", "b", "c"]
+
+# my_join test
+# a = ["a", "b", "c", "d"]
+# p a.my_join == "abcd"
+# p a.my_join("$") == "a$b$c$d"
+
+# my_reverse test
+# p ["a", "b", "c"].my_reverse #=> ["c", "b", "a"]
+# p [1].my_reverse #=> [1]
