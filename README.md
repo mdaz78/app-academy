@@ -7,3 +7,4 @@ Completed Projects
 --
 * [Tic Tac Toe Game](https://github.com/mdaz78/TicTacToe) - A standard game of tic tac toe that can be played in the console.
 * [ToDo Board Project](https://github.com/mdaz78/todo-Board) - A simple todo board to track tasks. 
+* [Ghost Game](https://github.com/mdaz78/Ghost) - A simple console implementation of Ghost Game.
