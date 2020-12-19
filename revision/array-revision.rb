@@ -94,35 +94,63 @@ end
 def reverse_range(min, max)
 end
 
-print reverse_range(10, 17) # => [16, 15, 14, 13, 12, 11]
-puts
-print reverse_range(1, 7)   # => [6, 5, 4, 3, 2]
+# print reverse_range(10, 17) # => [16, 15, 14, 13, 12, 11]
+# puts
+# print reverse_range(1, 7)   # => [6, 5, 4, 3, 2]
 
 # 8. Write a method first_half(array) that takes in an array and returns a new
 #    array containing the first half of the elements in the array. If there is
 #    an odd number of elements, return the first half including the middle
 #    element.
 
+def first_half(array)
+end
+
+# print first_half(["Brian", "Abby", "David", "Ommi"]) # => ["Brian", "Abby"]
+# puts
+# print first_half(["a", "b", "c", "d", "e"])          # => ["a", "b", "c"]
+
 # 9. Write a method factors_of(num) that takes in a num and returns an array of
 #    all positive numbers less than or equal to num that can divide num.
+
+# print factors_of(3)   # => [1, 3]
+# puts
+# print factors_of(4)   # => [1, 2, 4]
+# puts
+# print factors_of(8)   # => [1, 2, 4, 8]
+# puts
+# print factors_of(9)   # => [1, 3, 9]
+# puts
+# print factors_of(16)  # => [1, 2, 4, 8, 16]
 
 # 10. Write a method select_odds(numbers) that takes in an array of numbers and
 #     returns a new array containing the odd numbers of the original array.
 
+# print select_odds([13, 4, 3, 7, 6, 11]) # => [13, 3, 7, 11]
+# puts
+# print select_odds([2, 4, 6])            # => []
+
 # 11. Write a method select_long_words(words) that takes in an array of words
 #     and returns a new array containing all of the words of the original array
 #     that are longer than 4 characters.
+
+# print select_long_words(["what", "are", "we", "eating", "for", "dinner"]) # => ["eating", "dinner"]
+# puts
+# print select_long_words(["keep", "coding"])                               # => ["coding"]
 
 # 12. Write a method sum_elements(arr1, arr2) that takes in two arrays. The
 #     method should return a new array containing the results of adding together
 #     corresponding elements of the original arrays. You can assume the arrays
 #     have the same length.
 
-# 13. Write a method sum_elements(arr1, arr2) that takes in two arrays. The
-#     method should return a new array containing the results of adding together
-#     corresponding elements of the original arrays. You can assume the arrays
-#     have the same length.
+# print sum_elements([7, 4, 4], [3, 2, 11])                            # => [10, 6, 15]
+# puts
+# print sum_elements(["cat", "pizza", "boot"], ["dog", "pie", "camp"]) # => ["catdog", "pizzapie", "bootcamp"]
 
-# 14. Write a method fizz_buzz(max) that takes in a number max and returns an
+# 13. Write a method fizz_buzz(max) that takes in a number max and returns an
 #     array containing all numbers greater than 0 and less than max that are
 #     divisible by either 4 or 6, but not both.
+
+# print fizz_buzz(20) # => [4, 6, 8, 16, 18]
+# puts
+# print fizz_buzz(15) # => [4, 6, 8]
