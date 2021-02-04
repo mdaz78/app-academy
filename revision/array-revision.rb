@@ -1,14 +1,14 @@
 # Intro to programming
 
-# Arrays
+##################
+##### Arrays #####
+##################
 
 # 1. Write a method doubler(numbers) that takes an array of numbers and returns
 #    a new array where every element of the original array is multiplied by 2.
 
 def doubler(numbers)
-  numbers.map do |num|
-    num * 2
-  end
+  numbers.map { |n| n * 2 }
 end
 
 # print doubler([1, 2, 3, 4]) # => [2, 4, 6, 8]
@@ -20,9 +20,7 @@ end
 #    after it.
 
 def yell(words)
-  words.map do |word|
-    word + "!"
-  end
+  words.map { |word| word + "!" }
 end
 
 # print yell(["hello", "world"]) # => ["hello!", "world!"]
@@ -34,9 +32,7 @@ end
 #    multiplied with its index.
 
 def element_times_index(nums)
-  nums.map.with_index do |num, index|
-    num * index
-  end
+  nums.map.with_index { |el, idx| el * idx }
 end
 
 # print element_times_index([4, 7, 6, 5])       # => [0, 7, 12, 15]
@@ -47,12 +43,7 @@ end
 #    array containing all even numbers from 0 to max
 
 def even_nums(max)
-  evens = []
-  0.upto(max) do |n|
-    evens << n if n.even?
-  end
-
-  evens
+  (0..max).select { |n| n % 2 == 0 }
 end
 
 # print even_nums(10) # => [0, 2, 4, 6, 8, 10]
@@ -64,9 +55,7 @@ end
 #    inclusive.
 
 def range(min, max)
-  ranges = []
-  min.upto(max) { |n| ranges << n }
-  ranges
+  (min..max).to_a
 end
 
 # print range(2, 7)   # => [2, 3, 4, 5, 6, 7]
@@ -78,9 +67,7 @@ end
 #    max (inclusive).
 
 def odd_range(min, max)
-  ranges = []
-  min.upto(max) { |n| ranges << n unless n.even? }
-  ranges
+  (min..max).to_a.select { |n| n % 2 != 0 }
 end
 
 # print odd_range(11, 18) # => [11, 13, 15, 17]
@@ -92,6 +79,7 @@ end
 #    max in reverse order.The min and max should be excluded from the array
 
 def reverse_range(min, max)
+  (min..max).to_a.reverse.select { |n| n != min && n != max }
 end
 
 # print reverse_range(10, 17) # => [16, 15, 14, 13, 12, 11]
@@ -104,6 +92,8 @@ end
 #    element.
 
 def first_half(array)
+  mid = array.length / 2.0
+  array[0, mid.round()]
 end
 
 # print first_half(["Brian", "Abby", "David", "Ommi"]) # => ["Brian", "Abby"]
@@ -112,6 +102,10 @@ end
 
 # 9. Write a method factors_of(num) that takes in a num and returns an array of
 #    all positive numbers less than or equal to num that can divide num.
+
+def factors_of(num)
+  (1..num).to_a.select { |n| num % n == 0 }
+end
 
 # print factors_of(3)   # => [1, 3]
 # puts
@@ -126,6 +120,10 @@ end
 # 10. Write a method select_odds(numbers) that takes in an array of numbers and
 #     returns a new array containing the odd numbers of the original array.
 
+def select_odds(numbers)
+  numbers.select { |n| n % 2 != 0 }
+end
+
 # print select_odds([13, 4, 3, 7, 6, 11]) # => [13, 3, 7, 11]
 # puts
 # print select_odds([2, 4, 6])            # => []
@@ -133,6 +131,10 @@ end
 # 11. Write a method select_long_words(words) that takes in an array of words
 #     and returns a new array containing all of the words of the original array
 #     that are longer than 4 characters.
+
+def select_long_words(words)
+  words.select { |word| word.length > 4 }
+end
 
 # print select_long_words(["what", "are", "we", "eating", "for", "dinner"]) # => ["eating", "dinner"]
 # puts
@@ -143,6 +145,19 @@ end
 #     corresponding elements of the original arrays. You can assume the arrays
 #     have the same length.
 
+def sum_elements(arr1, arr2)
+  sums = []
+  index = 0
+
+  while index < arr1.length
+    sum = arr1[index] + arr2[index]
+    sums << sum
+    index += 1
+  end
+
+  sums
+end
+
 # print sum_elements([7, 4, 4], [3, 2, 11])                            # => [10, 6, 15]
 # puts
 # print sum_elements(["cat", "pizza", "boot"], ["dog", "pie", "camp"]) # => ["catdog", "pizzapie", "bootcamp"]
@@ -151,6 +166,15 @@ end
 #     array containing all numbers greater than 0 and less than max that are
 #     divisible by either 4 or 6, but not both.
 
-# print fizz_buzz(20) # => [4, 6, 8, 16, 18]
-# puts
-# print fizz_buzz(15) # => [4, 6, 8]
+def fizz_buzz(max)
+  fizz_buzz_list = []
+  (0...max).to_a.each do |n|
+    fizz_buzz_list << n if !(n % 4 == 0 && n % 6 == 0) && (n % 4 == 0 || n % 6 == 0)
+  end
+
+  fizz_buzz_list
+end
+
+print fizz_buzz(20) # => [4, 6, 8, 16, 18]
+puts
+print fizz_buzz(15) # => [4, 6, 8]
