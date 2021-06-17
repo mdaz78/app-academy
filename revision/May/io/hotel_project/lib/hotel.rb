@@ -6,16 +6,6 @@ class Hotel
     @rooms = create_rooms(rooms)
   end
 
-  def create_rooms(rooms)
-    room_instances = {}
-
-    rooms.each do |room_name, room_capacity|
-      room_instances[room_name] = Room.new(room_capacity)
-    end
-
-    room_instances
-  end
-
   def name
     name = @name.split(" ").map { |word| word[0].upcase + word[1..-1] }
     name.join(" ")
@@ -55,5 +45,17 @@ class Hotel
     @rooms.each do |room_name, room_instance|
       puts "#{room_name}. #{room_instance.available_space}"
     end
+  end
+
+  private
+
+  def create_rooms(rooms)
+    room_instances = {}
+
+    rooms.each do |room_name, room_capacity|
+      room_instances[room_name] = Room.new(room_capacity)
+    end
+
+    room_instances
   end
 end
