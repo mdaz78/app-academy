@@ -10,7 +10,6 @@ def least_common_multiple(num_1, num_2)
   nil
 end
 
-
 # Write a method, most_frequent_bigram, that takes in a string and returns the two adjacent letters that appear the
 # most in the string.
 def most_frequent_bigram(str)
@@ -25,7 +24,6 @@ def most_frequent_bigram(str)
 
   sorted_counts.last.first
 end
-
 
 class Hash
   # Write a method, Hash#inverse, that returns a new hash where the key-value pairs are swapped
